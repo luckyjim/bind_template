@@ -38,7 +38,7 @@ endif()
 # if your C++ code binded must be optimize disable -Os with NOMINSIZE keyword
 nanobind_add_module(process_scalar
     STABLE_ABI
-    src/cpp/bindings/bindings.cpp
+    src/cpp/bindings/bindings_scalar.cpp
     src/cpp/bindings/bind_process_scalar.cpp
     src/cpp/lib/process_scalar.cpp
 )
@@ -47,5 +47,16 @@ target_include_directories(process_scalar PRIVATE
     src/cpp/lib
 )
 
+nanobind_add_module(process_ndarray
+    STABLE_ABI
+    src/cpp/bindings/bind_process_ndarray.cpp
+    src/cpp/lib/process_ndarray.cpp
+)
+
+target_include_directories(process_ndarray PRIVATE
+    src/cpp/lib
+)
+
 # Install directive for scikit-build-core
 install(TARGETS process_scalar LIBRARY DESTINATION bind_template/scalar)
+install(TARGETS process_ndarray LIBRARY DESTINATION bind_template/ndarray)
