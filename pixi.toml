@@ -5,7 +5,6 @@ name = "bind_template"
 platforms = ["linux-64"]
 version = "0.1.0"
 
-[tasks]
 
 [feature.runtime.dependencies]
 nanobind = ">=2.13.0,<3"
@@ -24,7 +23,6 @@ tests_unit = "pytest -v tests/unit"
 
 [feature.lint.dependencies]
 ruff = "*"
-
 
 [environments]
 default = { features = ["runtime"] }
