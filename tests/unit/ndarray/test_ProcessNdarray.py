@@ -1,4 +1,4 @@
-from bind_template.ndarray import ProcessNdarray
+from bind_template.ndarray.process_ndarray import ProcessNdarray
 import numpy as np
 
 
