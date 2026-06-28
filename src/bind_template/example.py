@@ -2,7 +2,7 @@
 
 
 
-import matplotlib.pyplot as plt
+
 
 import scipy.fft as sf
 
