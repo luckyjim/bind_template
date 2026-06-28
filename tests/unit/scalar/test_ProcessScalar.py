@@ -1,4 +1,4 @@
-from bind_template.scalar import ProcessScalar
+from bind_template.scalar.process_scalar import ProcessScalar
 
 
 def test_ProcessScalar_add():
