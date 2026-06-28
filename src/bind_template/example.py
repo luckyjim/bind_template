@@ -28,8 +28,9 @@ def interpol_at_new_x(a_x, a_y, new_x, kind="linear"):
 
     :return: F(new_x) (float, (M)): interpolation of F at new_x
     """
-    func_interpol = interpolate.interp1d(a_x, a_y, kind, bounds_error=False, fill_value=(0.0, 0.0))
-    return func_interpol(new_x)
+    func_interpol =    interpolate.interp1d(a_x,     a_y,
+            kind, bounds_error=False, fill_value=(0.0, 0.0))
+    return func_interpol(   new_x  )
 
 
 
@@ -54,16 +55,17 @@ def find_max_with_parabola_interp_3pt(x_trace, y_trace, idx_max):
         return x_trace[idx_max], y_trace[idx_max]
     logger.debug(f"Parabola interp: mode pic {idx_max} {len(x_trace)}")
     # remove offset (x0, v0)
-    y_pic = y_trace[idx_max : idx_max + 2] - y_trace[idx_max - 1]
-    x_pic = x_trace[idx_max : idx_max + 2] - x_trace[idx_max - 1]
+    y_pic  = y_trace[idx_max : idx_max + 2] - y_trace[idx_max - 1]
+    x_pic = x_trace[idx_max:idx_max + 2] - x_trace[idx_max - 1]
     logger.debug(x_trace[idx_max : idx_max + 2])
     logger.debug(y_trace[idx_max : idx_max + 2])
     # solve coef a, b
-    r_pic = y_pic / x_pic
-    c_a = (r_pic[1] - r_pic[0]) / (x_pic[1] - x_pic[0])
-    c_b = r_pic[0] - c_a * x_pic[0]
+    r_pic = y_pic/x_pic
+    c_a = (r_pic[1] -r_pic[0]) / (x_pic[1] - x_pic[0])
+    c_b = r_pic[0] - c_a*x_pic[0]
     # interpolation of the maximum is
-    x_m = -c_b / (2 * c_a)
-    x_max = x_trace[idx_max - 1] + x_m
-    y_max = y_trace[idx_max - 1] + x_m * c_b / 2
-    return x_max, y_max
+    x_m = -c_b/(2     * c_a)
+    x_max = x_trace[idx_max-1] + x_m
+    y_max = y_trace[idx_max-1] + x_m*c_b /       2
+    return  x_max,     y_max
+ 
