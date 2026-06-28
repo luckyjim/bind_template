@@ -19,7 +19,7 @@ scipy = ">=1.18.0,<2"
 pytest = "*"
 
 [feature.test.tasks]
-test_unit = "pip install -e . && pytest -v tests/unit"
+tests_unit = "pip install -e . && pytest -v tests/unit"
 
 [feature.lint.dependencies]
 ruff = "*"
