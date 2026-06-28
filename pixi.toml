@@ -16,13 +16,20 @@ scipy = ">=1.18.0,<2"
 
 [feature.test.dependencies]
 pytest = "*"
+pytest-cov = ">=7.1.0,<8"
+ruff = ">=0.15.20,<0.16"
 
 [feature.test.tasks]
 install = "pip install -e . "
-tests_unit = "pytest -v tests/unit"
+tests_unit = "pytest -v --cov=bind_template tests/unit"
 
 [feature.lint.dependencies]
 ruff = "*"
+
+[feature.lint.tasks]
+format = "ruff format src/bind_template && ruff check --select I --fix src/bind_template"
+lint = "ruff check src/bind_template"
+fix_code = "ruff check --fix src/bind_template"
 
 [environments]
 default = { features = ["runtime"] }
