@@ -1,6 +1,7 @@
 #include <nanobind/nanobind.h>
 
 #include "process_scalar.h"
+//#include "OtherClassOfModule.h"
 
 namespace nb = nanobind;
 
