@@ -4,7 +4,7 @@
 
 namespace nb = nanobind;
 
-void bind_process_scalar(nb::module_& m)
+NB_MODULE(process_scalar, m)
 {
     m.doc() = "A C++ class binding by nanobind";
     nb::class_<ProcessScalar>(m, "ProcessScalar")

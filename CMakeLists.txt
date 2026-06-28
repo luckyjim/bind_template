@@ -38,7 +38,6 @@ endif()
 # if your C++ code binded must be optimize disable -Os with NOMINSIZE keyword
 nanobind_add_module(process_scalar
     STABLE_ABI
-    src/cpp/bindings/bindings.cpp
     src/cpp/bindings/bind_process_scalar.cpp
     src/cpp/lib/process_scalar.cpp
 )
