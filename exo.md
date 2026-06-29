@@ -151,6 +151,7 @@ Implementation in `ndarray_solution` branch, see
 * src/cpp/bindings/bind_process_ndarray.cpp
 * src/cpp/lib/process_ndarray.cpp
 * tests/unit/ndarray/test_ProcessNdarray.py
+* cMakeLists.txt
 
 ```console
 bind_template$ pixi run -e quality install
