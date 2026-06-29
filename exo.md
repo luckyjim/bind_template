@@ -66,6 +66,9 @@ https://gcc.gnu.org/onlinedocs/gcc-3.2.3/gcc/Optimize-Options.html
 
 ### Solution
 
+Used --verbose for cmake build
+
+
 ```console
 bind_template$ pixi shell
 (bind_template) bind_template$ cmake -S . -B build -Dnanobind_DIR=$(python -m nanobind --cmake_dir)
@@ -74,7 +77,10 @@ bind_template$ pixi shell
 
 ```console
 [ 76%] Building CXX object CMakeFiles/process_scalar.dir/src/cpp/lib/process_scalar.cpp.o
-/usr/bin/c++ -Dprocess_scalar_EXPORTS -I/home/jcolley/projet/reprise/binder/bind_template/src/cpp/lib -I/home/jcolley/projet/reprise/binder/bind_template/.pixi/envs/default/include/python3.14 -I/home/jcolley/projet/reprise/binder/bind_template/.pixi/envs/default/lib/python3.14/site-packages/nanobind/include -O3 -DNDEBUG -fPIC -fvisibility=hidden -fno-stack-protector -Os -ffunction-sections -fdata-sections -std=gnu++17 -MD -MT CMakeFiles/process_scalar.dir/src/cpp/lib/process_scalar.cpp.o -MF CMakeFiles/process_scalar.dir/src/cpp/lib/process_scalar.cpp.o.d -o CMakeFiles/process_scalar.dir/src/cpp/lib/process_scalar.cpp.o -c /home/jcolley/projet/reprise/binder/bind_template/src/cpp/lib/process_scalar.cpp
+/usr/bin/c++ -Dprocess_scalar_EXPORTS -I/home/jcolley/projet/reprise/binder/bind_template/src/cpp/lib -I/home/jcolley/projet/reprise/binder/bind_template/.pixi/envs/default/include/python3.14 -I/home/jcolley/projet/reprise/binder/bind_template/.pixi/envs/default/lib/python3.14/site-packages/nanobind/include 
+-O3 -DNDEBUG -fPIC -fvisibility=hidden -fno-stack-protector -Os -ffunction-sections
+
+ -fdata-sections -std=gnu++17 -MD -MT CMakeFiles/process_scalar.dir/src/cpp/lib/process_scalar.cpp.o -MF CMakeFiles/process_scalar.dir/src/cpp/lib/process_scalar.cpp.o.d -o CMakeFiles/process_scalar.dir/src/cpp/lib/process_scalar.cpp.o -c /home/jcolley/projet/reprise/binder/bind_template/src/cpp/lib/process_scalar.cpp
 ```
 
 in cMakeLists.txt add NOMINSIZE to nanobind_add_module
@@ -88,14 +94,17 @@ nanobind_add_module(process_scalar
 )
 ```
 
-rebuild and check option -O
+Clean and rebuild and check option -O
 
 ```console
 (bind_template) bind_template$ cmake --build build --target clean
 (bind_template) bind_template$ cmake --build build --verbose
 ...
 [ 76%] Building CXX object CMakeFiles/process_scalar.dir/src/cpp/lib/process_scalar.cpp.o
-/usr/bin/c++ -Dprocess_scalar_EXPORTS -I/home/jcolley/projet/reprise/binder/bind_template/src/cpp/lib -I/home/jcolley/projet/reprise/binder/bind_template/.pixi/envs/default/include/python3.14 -I/home/jcolley/projet/reprise/binder/bind_template/.pixi/envs/default/lib/python3.14/site-packages/nanobind/include -O3 -DNDEBUG -fPIC -fvisibility=hidden -fno-stack-protector -ffunction-sections -fdata-sections -std=gnu++17 -MD -MT CMakeFiles/process_scalar.dir/src/cpp/lib/process_scalar.cpp.o -MF CMakeFiles/process_scalar.dir/src/cpp/lib/process_scalar.cpp.o.d -o CMakeFiles/process_scalar.dir/src/cpp/lib/process_scalar.cpp.o -c /home/jcolley/projet/reprise/binder/bind_template/src/cpp/lib/process_scalar.cpp
+/usr/bin/c++ -Dprocess_scalar_EXPORTS -I/home/jcolley/projet/reprise/binder/bind_template/src/cpp/lib -I/home/jcolley/projet/reprise/binder/bind_template/.pixi/envs/default/include/python3.14 -I/home/jcolley/projet/reprise/binder/bind_template/.pixi/envs/default/lib/python3.14/site-packages/nanobind/include 
+-O3 -DNDEBUG -fPIC -fvisibility=hidden -fno-stack-protector -ffunction-sections
+
+ -fdata-sections -std=gnu++17 -MD -MT CMakeFiles/process_scalar.dir/src/cpp/lib/process_scalar.cpp.o -MF CMakeFiles/process_scalar.dir/src/cpp/lib/process_scalar.cpp.o.d -o CMakeFiles/process_scalar.dir/src/cpp/lib/process_scalar.cpp.o -c /home/jcolley/projet/reprise/binder/bind_template/src/cpp/lib/process_scalar.cpp
 ...
 ```
 
