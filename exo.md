@@ -1,86 +1,110 @@
-# Exercices for pixi
+# Exercises with pixi
 
 ## Add coverage feature
 
-* install in "feature.test" the pytest-cov library
-* modify task tests_unit to obtain the coverage at the end of test
+* Install `pytest-cov` in the `feature.test` pixi feature
+* Modify the `tests_unit` task to display a coverage report at the end of the test run
 
-## Use ruff 
+## Use ruff
 
-[ruff](https://docs.astral.sh/ruff/) is a linter and formater very fast.
+[ruff](https://docs.astral.sh/ruff/) is an extremely fast Python linter and formatter written in Rust.
 
-* install ruff in  "feature.linter"
+* Install `ruff` in the `feature.linter` pixi feature
 
-### Add task format code
+### Add a task to format code
 
-* name of task : `format`
-* use it on src/bind_template 
-* check the result with bind_template/example.py
+* Task name: `format`
+* Apply it to `src/bind_template`
+* Verify the result on `bind_template/example.py`
 
-### Add task to sort import
+### Add a task to sort imports
 
-ruff can also sort import with the syntaxe
+ruff can sort imports using the `I` rule set:
 
 ```console
 ruff check --select I --fix <directory>
- ```
+```
 
-* add this feature in task `format`
-* check the result with bind_template/example.py
+* Add this step to the existing `format` task
+* Verify the result on `bind_template/example.py`
 
-### Add task to check the code
+### Add a task to check the code
 
-ruff is a linter with syntaxe
+ruff is a linter. Its basic usage is:
 
 ```console
 ruff check <directory>
 ```
 
-* create task `lint` and use ruff
+* Create a `lint` task that runs ruff on the source directory
 
-### Apply simple fix 
+### Apply simple fixes
 
-ruff can also apply simple fix to the code, like remove unused import, with syntax
+ruff can automatically fix simple issues (e.g. remove unused imports):
 
 ```console
 ruff check --fix <directory>
 ```
 
-* create a task `fix_code`
-* check the result
+* Create a `fix_code` task
+* Verify the result
 
 
-# Exercices for nanobind
+# Exercises with nanobind
 
-## Add a second class to module process_scalar
+## Compilation flags for bindings
 
-Create a new C++ class ProcessDouble with unique method sqrt_if_pos which computes square root if number is positive else return zero.
+* Check which optimization flag (`-O`) is used during the binding compilation stage
+* What happens when multiple `-O` flags are defined? The GCC documentation states:
 
-* create the new class
-* modify the cMakelist.txt to bind it in python
-* check the installation in package with pip install
-* add a test
+> If you use multiple `-O` options, with or without level numbers, the last such option is the one that is effective.
 
-## Create a new module process_ndarray with unique class
+https://gcc.gnu.org/onlinedocs/gcc-3.2.3/gcc/Optimize-Options.html
 
-create a new module process_ndarray in package `run_template.ndarray` and add unique class `ProcessNdarray` with the interface defined in `src/cpp/lib/process_ndarray.h`
+* Fix the build to enforce `-O3` using the hint provided in `CMakeLists.txt`
+* Verify the result
 
+## Create a new module `process_ndarray` with a single class
 
-```c++
+**Goal:**
+
+Create a new extension module `process_ndarray` inside the Python package `bind_template.ndarray`, and expose a single class `ProcessNdarray` whose interface is defined in `src/cpp/lib/process_ndarray.h`.
+
+The C++ interface to implement:
+
+```cpp
 class ProcessNdarray {
 public:
     ProcessNdarray() = default;
 
-    // add scalar for all elements of array of double, return size of array
-    int add_in_place(array<double>, double scalar);
+    // Add a scalar to all elements of a C-contiguous float64 array in place.
+    // Returns the number of elements modified, or a negative error code.
+    int add_in_place(nb::ndarray<double, nb::c_contig>& array, double scalar);
 
-    // print shape and dtype
-    int inspect(?? array) const;
+    // Print shape, strides, device and dtype information.
+    void inspect(const nb::ndarray<>& array) const;
 };
 ```
 
+Key points:
+- `nb::ndarray<double, nb::c_contig>` constrains the input to a C-contiguous `float64` array — nanobind enforces this at the call site, so no runtime dtype cast is needed.
+- `nb::ndarray<>` (untyped) is used for `inspect` to accept any array regardless of dtype or layout.
+- Each extension module must have its own `NB_MODULE(name, m)` entry point in a dedicated `.cpp` file.
 
-* create the new class
-* modify the cMakelist.txt to bind it in python
-* check the installation in package with pip install
-* add a test
+Tasks:
+* Implement the class in `src/cpp/lib/process_ndarray.cpp`
+* Create the binding entry point in `src/cpp/bindings/bind_process_ndarray.cpp`
+* Update `CMakeLists.txt` to build and install the new module under `bind_template/ndarray`
+* Verify the installation with `pip install -e .`
+* Add a unit test
+
+## Add a second class to the `process_scalar` module
+
+**Goal:**
+
+Create a new C++ class `ProcessSqrt` with a single method `sqrt_if_pos` that returns the square root of a number if it is positive, and zero otherwise.
+
+* Implement the class in `src/cpp/lib/`
+* Update `CMakeLists.txt` to include it in the `process_scalar` module
+* Verify the installation with `pip install -e .`
+* Add a unit test
