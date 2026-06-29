@@ -166,6 +166,20 @@ pip install -e .
 pip uninstall bind_template
 ```
 
+**Distribution**
+
+If the package is public, you can install with url of repository with prefix `git+`
+
+```console
+$ pip install git+https://github.com/luckyjim/bind_template.git
+
+Collecting git+https://github.com/luckyjim/bind_template.git
+  Cloning https://github.com/luckyjim/bind_template.git 
+  ...
+Successfully built bind-template
+Installing collected packages: bind-template
+Successfully installed bind-template-0.0.1
+```
 
 ## Testing Strategy
 
