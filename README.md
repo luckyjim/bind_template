@@ -1,4 +1,4 @@
-# bind_template
+# bind_template package
 
 ## Overview
 
@@ -57,42 +57,89 @@ Why this layout is useful:
 
 ## Dependency Management with Pixi
 
+Pixi is a package manager that simplifies dependency management for different development scenarios.
 pixi.toml defines dependencies and workflow commands using features and environments.
 
+### Why use Pixi environments?
+
+1. **Isolation**: Keep development tools (like ruff, pytest) separate from production runtime dependencies.
+   This avoids bloating your installed package with unnecessary build tooling.
+
+2. **Reproducibility**: The pixi.lock file pins all transitive dependencies to exact versions.
+   Every team member, CI/CD pipeline, and deployment gets identical environments.
+
+3. **Workflow automation**: Define named tasks in pixi.toml and run them in the correct environment context.
+   No need to remember complex shell command chains.
+
+4. **Multiple use cases**: Switch between environments for different work without reinstalling.
+
+### Features and environments
+
+pixi.toml organizes dependencies as features, then combines them into named environments:
+
+Features defined in the project:
 - runtime feature: python, nanobind, numpy, scipy, pip, ipython
 - test feature: pytest
 - lint feature: ruff
 
-```bash
-# install package in feature lint 
-pixi add -f lint ruff
-```
 
-For each feature, we can define a task in pixi.toml, like:
+> NOTE:
+>
+> `pixi add cmake` can returns an error (Filename too long (os error 36)) depending on the file system.
+>
+> if you don't have cmake installed, try with pixi else use system installation
 
-```bash
+
+Tasks are defined per-feature:
+
+```toml
 [feature.test.tasks]
 install = "pip install -e . "
+tests_unit = "pytest -v tests/unit"
 ```
 
-Environment is a set of features:
-- default environment: runtime
-- quality environment: runtime + test + lint
+Environments combine features:
 
-```console
+```toml
 [environments]
-quality = { features = ["runtime","test","lint"] }
+default = { features = ["runtime"] }
+quality = { features = ["runtime", "test", "lint"] }
 ```
-run task in env, with pixi run
+
+### Usage patterns
+
+**Pattern 1: Daily development (minimal environment)**
 
 ```bash
+pixi shell
+# You now have: python, nanobind, numpy, scipy, pip, ipython
+# NOT pytest or ruff—keep your environment lean
+
+pip install -e .
+python -c "from bind_template.scalar.process_scalar import ProcessScalar; print(ProcessScalar().add(1, 2))"
+```
+
+**Pattern 2: Testing and code review (full development environment)**
+
+```bash
+# Run predefined tasks in the quality environment
 pixi run -e quality install
+pixi run -e quality tests_unit
+
+# Or interactively work in quality environment
+pixi shell -e quality
+ruff check .
+ruff format .
+pytest -v tests/unit
 ```
 
-active shell with pixi shell
-```bash
-pixi shell -e quality 
-```
+
+### Benefits summary
+
+- **For solo developers**: One command to switch tooling context (pixi shell -e quality).
+- **For teams**: Onboarding is trivial—pixi shell and you're ready to code.
+- **For CI/CD**: Deterministic builds thanks to pixi.lock; no "works on my machine" surprises.
+- **For users**: Smaller install footprints; production never includes dev tools.
 
 ## Packaging and Build System
 
@@ -120,7 +167,6 @@ pip uninstall bind_template
 ```
 
 
-
 ## Testing Strategy
 
 The repository is organized around three test levels:
@@ -128,6 +174,9 @@ The repository is organized around three test levels:
 - unit tests: validate isolated functions/classes (fast feedback)
 - integration tests: validate interactions between components
 - end-to-end tests: validate complete user-facing workflows
+
+If you are interested in software testing, you can consult the [International Software Testing Qualifications Board (ISTQB)](https://en.wikipedia.org/wiki/International_Software_Testing_Qualifications_Board) courses, like [Certified Tester
+Foundation Level](https://istqb.org/wp-content/uploads/2024/11/ISTQB_CTFL_Syllabus_v4.0.1.pdf) as well as [the definitions of terms related to software testing](https://glossary.istqb.org/en_US/search?term=&exact_matches_first=true).
 
 Current automated examples include unit tests for the C++-backed ProcessScalar class.
 
@@ -152,6 +201,8 @@ def test_array_values():
    assert np.allclose(actual, expected)
 ```
 
+Consult the [pytest doc](https://docs.pytest.org/en/stable/index.html) to discover all amazing possibility of this library.
+
 ## Code Quality
 
 Ruff is the primary code-quality tool in this project.
@@ -168,6 +219,8 @@ ruff format .
 ```
 
 ## nanobind Integration
+
+nanobind allows calling C++ code from Python.
 
 ### Source Organization
 
@@ -237,7 +290,7 @@ The complete nanobind documentation is available [here](https://nanobind.readthe
 
 ### Compilation and installation
 
-Development/debug mode
+**Development/debug mode**
 
 In the default pixi environment, you can run CMake directly:
 
@@ -247,7 +300,7 @@ $ cmake --build build
 $ cmake --build build --target clean
 ```
 
-Installation
+**Installation**
 
 Installation is performed with `pip install .` thanks to the build system configured in pyproject.toml:
 
@@ -276,6 +329,10 @@ Expected output:
 
 ## Exercices
 
-find in exo.md file two kinds of exercices:
+File exo.md contents two kinds of exercice :
 * pixi for quality tool
 * use of nanobind
+
+Correction in branches
+* pixi_solution
+* ndarray_solution
