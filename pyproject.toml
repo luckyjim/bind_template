@@ -22,7 +22,7 @@ classifiers = [
     "License :: BSD",
 ]
 # Optional: runtime dependency specification
-# dependencies = [ "cryptography >=41.0" ]
+dependencies = [ "numpy" ]
 
 [project.urls]
 Homepage = "https://gitlab.in2p3.fr/colley/bind_template"
