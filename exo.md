@@ -83,7 +83,9 @@ bind_template$ pixi shell
  -fdata-sections -std=gnu++17 -MD -MT CMakeFiles/process_scalar.dir/src/cpp/lib/process_scalar.cpp.o -MF CMakeFiles/process_scalar.dir/src/cpp/lib/process_scalar.cpp.o.d -o CMakeFiles/process_scalar.dir/src/cpp/lib/process_scalar.cpp.o -c /home/jcolley/projet/reprise/binder/bind_template/src/cpp/lib/process_scalar.cpp
 ```
 
-in cMakeLists.txt add NOMINSIZE to nanobind_add_module
+Two -O flags : -O3 ... -Os
+
+so -O3 isn't used ... In cMakeLists.txt add NOMINSIZE to nanobind_add_module
 
 ```python
 nanobind_add_module(process_scalar
