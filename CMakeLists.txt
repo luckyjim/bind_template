@@ -38,6 +38,7 @@ endif()
 # if your C++ code binded must be optimize disable -Os with NOMINSIZE keyword
 nanobind_add_module(process_scalar
     STABLE_ABI
+    NOMINSIZE
     src/cpp/bindings/bind_process_scalar.cpp
     src/cpp/lib/process_scalar.cpp
 )
@@ -48,6 +49,7 @@ target_include_directories(process_scalar PRIVATE
 
 nanobind_add_module(process_ndarray
     STABLE_ABI
+    NOMINSIZE
     src/cpp/bindings/bind_process_ndarray.cpp
     src/cpp/lib/process_ndarray.cpp
 )
