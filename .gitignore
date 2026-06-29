@@ -5,3 +5,4 @@ build
 pixi.lock
 .vscode
 __pycache__
+.coverage
