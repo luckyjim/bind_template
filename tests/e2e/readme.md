@@ -1,2 +1,4 @@
-end to end tests, high level test like script which use library
+End to End tests:
+
+High level test like test script exploring  different parameters combinaison.
  
