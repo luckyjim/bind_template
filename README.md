@@ -197,7 +197,6 @@ Foundation Level](https://istqb.org/wp-content/uploads/2024/11/ISTQB_CTFL_Syllab
 
 Current automated examples include unit tests for the C++-backed ProcessScalar class.
 
-![alt text](image-2.png)
 
 Pytest basics used in this project:
 
