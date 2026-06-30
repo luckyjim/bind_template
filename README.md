@@ -1,3 +1,5 @@
+
+
 # bind_template package
 
 ## Overview
@@ -56,6 +58,7 @@ Why this layout is useful:
 - it keeps test and source clearly separated
 
 ## Dependency Management with Pixi
+ ![alt text](image-1.png)
 
 Pixi is a package manager that simplifies dependency management for different development scenarios.
 pixi.toml defines dependencies and workflow commands using features and environments.
@@ -194,6 +197,8 @@ Foundation Level](https://istqb.org/wp-content/uploads/2024/11/ISTQB_CTFL_Syllab
 
 Current automated examples include unit tests for the C++-backed ProcessScalar class.
 
+![alt text](image-2.png)
+
 Pytest basics used in this project:
 
 - test module names should use the test_ prefix (for example: test_ProcessScalar.py)
@@ -233,6 +238,8 @@ ruff format .
 ```
 
 ## nanobind Integration
+
+![alt text](image.png)
 
 nanobind allows calling C++ code from Python.
 
